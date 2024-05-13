@@ -1,3 +1,64 @@
 <script>
-    
+// Función que crea una tabla HTML a partir de un conjunto de datos
+function makeTabCont() {
+
+  // Obtiene los datos del servidor usando Google Apps Script
+  google.script.run.withSuccessHandler(function(obj) {
+
+    // Elimina una tabla existente con el identificador "tCont"
+    let table = document.getElementById('tCont');
+    if (table) table.remove();
+
+    // Crea una nueva tabla con el identificador "tCont"
+    table = document.createElement('table');
+    table.id = 'tCont';
+
+    // Crea el encabezado y cuerpo de la tabla
+    let tbHeader = document.createElement('thead');
+    let tbBody = document.createElement('tbody');
+
+    // Recorre las filas de los datos
+    for (let i = 0; i < obj.length; i++) {
+      // Crea una fila para cada fila de datos
+      let row = document.createElement('tr');
+
+      // Recorre las celdas de cada fila
+      for (let j = 0; j < obj[i].length; j++) {
+        // Crea una celda para cada celda de la fila
+        let cell = document.createElement('td');
+
+
+        if(j == 0){
+        // Asigna el valor de la celda al contenido de la celda
+        cell.textContent = (obj[i][j]);
+        }else{
+        // Asigna el valor de la celda al contenido de la celda
+        cell.textContent = (obj[i][j]);
+        }
+
+
+
+        // Agrega la celda a la fila actual
+        row.appendChild(cell);
+      }
+
+      // Si es la primera fila, agrégala al encabezado
+      if (i === 0) {
+        tbHeader.appendChild(row);
+        table.appendChild(tbHeader);
+      } else {
+        // De lo contrario, agrégala al cuerpo
+        tbBody.appendChild(row);
+      }
+    }
+
+    // Aplica estilos al encabezado y la tabla
+    tbHeader.classList.add('table-dark');
+    table.classList.add('table', 'table-striped', 'border', 'border-2');
+    // Agrega el cuerpo a la tabla y la tabla al contenedor
+    table.appendChild(tbBody);
+    document.getElementById('divCont').appendChild(table);
+
+  }).getContact(); // Obtiene los datos del servidor
+}
 </script>
