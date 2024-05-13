@@ -1,64 +1,59 @@
 <script>
-// Función que crea una tabla HTML a partir de un conjunto de datos
-function makeTabCont() {
+  // Función que crea una tabla HTML a partir de un conjunto de datos
+  function makeTabCont() {
+    // Obtiene los datos del servidor usando Google Apps Script
+    google.script.run
+      .withSuccessHandler(function (obj) {
+        // Elimina una tabla existente con el identificador "tCont"
+        let table = document.getElementById("tCont");
+        if (table) table.remove();
 
-  // Obtiene los datos del servidor usando Google Apps Script
-  google.script.run.withSuccessHandler(function(obj) {
+        // Crea una nueva tabla con el identificador "tCont"
+        table = document.createElement("table");
+        table.id = "tCont";
 
-    // Elimina una tabla existente con el identificador "tCont"
-    let table = document.getElementById('tCont');
-    if (table) table.remove();
+        // Crea el encabezado y cuerpo de la tabla
+        let tbHeader = document.createElement("thead");
+        let tbBody = document.createElement("tbody");
 
-    // Crea una nueva tabla con el identificador "tCont"
-    table = document.createElement('table');
-    table.id = 'tCont';
+        // Encabezado de la tabla:
+        let encabezado = document.createElement("tr");
+        for (let e = 0; e < obj[0].length; e++) {
+          let cell = document.createElement("td");
+          cell.textContent = obj[0][e];
+          encabezado.appendChild(cell);
+        }
+        tbHeader.appendChild(encabezado);
+        // Agrega el header a la tabla:
+        table.appendChild(tbHeader);
 
-    // Crea el encabezado y cuerpo de la tabla
-    let tbHeader = document.createElement('thead');
-    let tbBody = document.createElement('tbody');
+        //Cuerpo de la tabla:
+        // Recorre las filas de los datos
+        for (let i = 1; i < obj.length; i++) {
+          // Crea una fila para cada fila de datos
+          let row = document.createElement("tr");
 
-    // Recorre las filas de los datos
-    for (let i = 0; i < obj.length; i++) {
-      // Crea una fila para cada fila de datos
-      let row = document.createElement('tr');
-
-      // Recorre las celdas de cada fila
-      for (let j = 0; j < obj[i].length; j++) {
-        // Crea una celda para cada celda de la fila
-        let cell = document.createElement('td');
-
-
-        if(j == 0){
-        // Asigna el valor de la celda al contenido de la celda
-        cell.textContent = (obj[i][j]);
-        }else{
-        // Asigna el valor de la celda al contenido de la celda
-        cell.textContent = (obj[i][j]);
+          // Recorre las celdas de cada fila
+          for (let j = 0; j < obj[i].length; j++) {
+            // Crea una celda para cada celda de la fila
+            let cell = document.createElement("td");
+            cell.textContent = obj[i][j];
+            // Agrega la celda a la fila actual
+            row.appendChild(cell);
+          }
+          tbBody.appendChild(row);
         }
 
+        // Agrega el cuerpo a la tabla:
+        table.appendChild(tbBody);
 
+        // Aplica estilos al encabezado y la tabla:
+        tbHeader.classList.add("table-dark");
+        table.classList.add("table", "table-striped", "border", "border-2");
 
-        // Agrega la celda a la fila actual
-        row.appendChild(cell);
-      }
-
-      // Si es la primera fila, agrégala al encabezado
-      if (i === 0) {
-        tbHeader.appendChild(row);
-        table.appendChild(tbHeader);
-      } else {
-        // De lo contrario, agrégala al cuerpo
-        tbBody.appendChild(row);
-      }
-    }
-
-    // Aplica estilos al encabezado y la tabla
-    tbHeader.classList.add('table-dark');
-    table.classList.add('table', 'table-striped', 'border', 'border-2');
-    // Agrega el cuerpo a la tabla y la tabla al contenedor
-    table.appendChild(tbBody);
-    document.getElementById('divCont').appendChild(table);
-
-  }).getContact(); // Obtiene los datos del servidor
-}
+        //Agrega la tabla al contenedor:
+        document.getElementById("divCont").appendChild(table);
+      })
+      .getContact(); // Obtiene los datos del servidor
+  }
 </script>
