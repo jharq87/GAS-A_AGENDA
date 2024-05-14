@@ -1,13 +1,18 @@
 <script>
+
   // Función que crea una tabla HTML a partir de un conjunto de datos
   function makeTabCont() {
+    // Elimina una tabla existente con el identificador "tCont"
+    let table = document.getElementById("tCont");
+    if (table) table.remove();
     // Obtiene los datos del servidor usando Google Apps Script
     google.script.run
-      .withSuccessHandler(function (obj) {
-        // Elimina una tabla existente con el identificador "tCont"
-        let table = document.getElementById("tCont");
-        if (table) table.remove();
+      .withSuccessHandler(makeTabContOK)
+      //.withFailureHandler(makeTabContFK)
+      .getContact(); // Obtiene los datos del servidor
+  }
 
+  function makeTabContOK(obj) {
         // Crea una nueva tabla con el identificador "tCont"
         table = document.createElement("table");
         table.id = "tCont";
@@ -53,7 +58,29 @@
 
         //Agrega la tabla al contenedor:
         document.getElementById("divCont").appendChild(table);
-      })
-      .getContact(); // Obtiene los datos del servidor
-  }
+        makeNotif(1,'Contactos creados satisfactoriamente.','Todo en Orden')
+      }
+      function makeTabContFK(){
+        //Mostrar notificaciones:
+
+      }
+      function makeNotif(tipo, mensaje, titulo){
+        let textNotif = document.getElementById('textNotif');
+        let tituNotif = document.getElementById('tituNotif');
+        let elementNotif = document.getElementById('notific');
+        let iconNotif = document.getElementById('iconNotif');
+        let Notif = bootstrap.Toast.getOrCreateInstance(elementNotif);
+        
+        //Editar Notificacion:
+
+        iconNotif.className = '';
+        iconNotif.classList.add('bi','bi-check2-square');
+        textNotif.textContent = mensaje;
+        tituNotif.textContent = titulo;
+        elementNotif.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-verde-claro');
+
+        //Mostrar Notificacion:
+        Notif.show();
+
+      }
 </script>
