@@ -1,4 +1,7 @@
 <script>
+  const notificOK = 1;
+  const notificAT = 2;
+  const notificFK = 3;
 
   // Función que crea una tabla HTML a partir de un conjunto de datos
   function makeTabCont() {
@@ -8,79 +11,105 @@
     // Obtiene los datos del servidor usando Google Apps Script
     google.script.run
       .withSuccessHandler(makeTabContOK)
-      //.withFailureHandler(makeTabContFK)
+      .withFailureHandler(makeTabContFK)
       .getContact(); // Obtiene los datos del servidor
   }
 
   function makeTabContOK(obj) {
-        // Crea una nueva tabla con el identificador "tCont"
-        table = document.createElement("table");
-        table.id = "tCont";
+    // Crea una nueva tabla con el identificador "tCont"
+    table = document.createElement("table");
+    table.id = "tCont";
 
-        // Crea el encabezado y cuerpo de la tabla
-        let tbHeader = document.createElement("thead");
-        let tbBody = document.createElement("tbody");
+    // Crea el encabezado y cuerpo de la tabla
+    let tbHeader = document.createElement("thead");
+    let tbBody = document.createElement("tbody");
 
-        // Encabezado de la tabla:
-        let encabezado = document.createElement("tr");
-        for (let e = 0; e < obj[0].length; e++) {
-          let cell = document.createElement("td");
-          cell.textContent = obj[0][e];
-          encabezado.appendChild(cell);
-        }
-        tbHeader.appendChild(encabezado);
-        // Agrega el header a la tabla:
-        table.appendChild(tbHeader);
+    // Encabezado de la tabla:
+    let encabezado = document.createElement("tr");
+    for (let e = 0; e < obj[0].length; e++) {
+      let cell = document.createElement("td");
+      cell.textContent = obj[0][e];
+      encabezado.appendChild(cell);
+    }
+    tbHeader.appendChild(encabezado);
+    // Agrega el header a la tabla:
+    table.appendChild(tbHeader);
 
-        //Cuerpo de la tabla:
-        // Recorre las filas de los datos
-        for (let i = 1; i < obj.length; i++) {
-          // Crea una fila para cada fila de datos
-          let row = document.createElement("tr");
+    //Cuerpo de la tabla:
+    // Recorre las filas de los datos
+    for (let i = 1; i < obj.length; i++) {
+      // Crea una fila para cada fila de datos
+      let row = document.createElement("tr");
 
-          // Recorre las celdas de cada fila
-          for (let j = 0; j < obj[i].length; j++) {
-            // Crea una celda para cada celda de la fila
-            let cell = document.createElement("td");
-            cell.textContent = obj[i][j];
-            // Agrega la celda a la fila actual
-            row.appendChild(cell);
-          }
-          tbBody.appendChild(row);
-        }
-
-        // Agrega el cuerpo a la tabla:
-        table.appendChild(tbBody);
-
-        // Aplica estilos al encabezado y la tabla:
-        tbHeader.classList.add("table-dark");
-        table.classList.add("table", "table-striped", "border", "border-2");
-
-        //Agrega la tabla al contenedor:
-        document.getElementById("divCont").appendChild(table);
-        makeNotif(1,'Contactos creados satisfactoriamente.','Todo en Orden')
+      // Recorre las celdas de cada fila
+      for (let j = 0; j < obj[i].length; j++) {
+        // Crea una celda para cada celda de la fila
+        let cell = document.createElement("td");
+        cell.textContent = obj[i][j];
+        // Agrega la celda a la fila actual
+        row.appendChild(cell);
       }
-      function makeTabContFK(){
-        //Mostrar notificaciones:
+      tbBody.appendChild(row);
+    }
 
-      }
-      function makeNotif(tipo, mensaje, titulo){
-        let textNotif = document.getElementById('textNotif');
-        let tituNotif = document.getElementById('tituNotif');
-        let elementNotif = document.getElementById('notific');
-        let iconNotif = document.getElementById('iconNotif');
-        let Notif = bootstrap.Toast.getOrCreateInstance(elementNotif);
-        
-        //Editar Notificacion:
+    // Agrega el cuerpo a la tabla:
+    table.appendChild(tbBody);
 
-        iconNotif.className = '';
-        iconNotif.classList.add('bi','bi-check2-square');
-        textNotif.textContent = mensaje;
-        tituNotif.textContent = titulo;
-        elementNotif.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-verde-claro');
+    // Aplica estilos al encabezado y la tabla:
+    tbHeader.classList.add("table-dark");
+    table.classList.add("table", "table-striped", "border", "border-2","border-dark");
 
-        //Mostrar Notificacion:
-        Notif.show();
+    //Agrega la tabla al contenedor:
+    document.getElementById("divCont").appendChild(table);
+    makeNotif(
+      notificOK,
+      "Contactos creados satisfactoriamente.",
+      "Todo en Orden"
+    );
+  }
 
-      }
+  function makeTabContFK() {
+    //Mostrar notificaciones:
+    makeNotif(notificFK, "Problemas en la carga de los contactos.", "ERROR");
+  }
+
+  function makeNotif(tipo, mensaje, titulo) {
+    let textNotif = document.getElementById("textNotif");
+    let tituNotif = document.getElementById("tituNotif");
+    let elementNotif = document.getElementById("notific");
+    let iconNotif = document.getElementById("iconNotif");
+    let Notif = bootstrap.Toast.getOrCreateInstance(elementNotif);
+
+    //Editar Notificacion:
+    textNotif.textContent = mensaje;
+    tituNotif.textContent = titulo;
+
+    //Establece tipo de notificación:
+    switch (tipo) {
+      case notificOK:
+        iconNotif.className = "";
+        iconNotif.classList.add("bi", "bi-check2-square");
+        elementNotif.style.backgroundColor = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--color-verde-claro");
+        break;
+      case notificAT:
+        iconNotif.className = "";
+        iconNotif.classList.add("bi", "bi-cone");
+        elementNotif.style.backgroundColor = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--color-amarillo-oscuro");
+        break;
+      case notificFK:
+        iconNotif.className = "";
+        iconNotif.classList.add("bi", "bi-bug");
+        elementNotif.style.backgroundColor = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--color-rojo-oscuro");
+        break;
+    }
+
+    //Mostrar Notificacion:
+    Notif.show();
+  }
 </script>

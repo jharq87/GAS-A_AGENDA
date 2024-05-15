@@ -9,12 +9,19 @@ function cathHtml(file) {
   return HtmlService.createHtmlOutputFromFile(file).getContent();
 }
 
-function getContact(){
-  let lb = SpreadsheetApp.openById('1XrF06J4sYhLkvJqmBKNB3j5TniIbbqA5c2F0u2yd1VA').getSheetByName('Hoja 1')
+function getContact() {
+  let lb = SpreadsheetApp.openById(
+    "1XrF06J4sYhLkvJqmBKNB3j5TniIbbqA5c2F0u2yd1VA"
+  ).getSheetByName("Hoja 1");
   let dt = lb.getDataRange().getValues();
-  return dt
+  return dt;
 }
 function formatDate(dateStr) {
-  dateStr.toLocaleDateString("es-CL", {weekday: "long", year: "numeric", month: "short", day: "numeric" })
+  dateStr.toLocaleDateString("es-CL", {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
   return dateStr;
 }

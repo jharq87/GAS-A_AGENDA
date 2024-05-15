@@ -1,33 +1,38 @@
 <main>
-    <!-- Botones -->
-    <div class="d-flex  justify-content-center mb-4">
-        <button class="btn btn-success m-3" onclick="makeTabCont()">Mostrar Contactos</button>
-    </div>
-    <!-- Tabla de contactos -->
-    <div class="container-sm mb-4 w-50" id="divCont">
+  <!-- Botones -->
+  <div class="d-flex justify-content-center mb-4">
+    <button class="btn btn-success m-3" onclick="makeTabCont()">
+      Mostrar Contactos
+    </button>
+  </div>
+  <!-- Tabla de contactos -->
+  <div class="container-sm mb-4 w-50" id="divCont"></div>
 
-    </div>
+  <!-- Notificaciones (toasts) -->
 
-
-
-
-
-    <!-- Notificaciones (toasts) -->
-
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <!-- Toasts -->
-        <div id="notific" class="toast align-items-center text-white  border-0" role="alert" aria-live="assertive" aria-atomic="true">
-         
-            <!-- Encabezado --> 
-            <div class="toast-header p-0">
-            <div class="icon-notif"><i id="iconNotif"></i></div>
-            <strong class="me-auto" id="tituNotif"></strong>
-            <button type="button" class="btn-close m-2" data-bs-dismiss="toast" aria-label="Close"></button>
-          </div>
-
-         <!-- Cuerpo -->
-          <div class="toast-body" id="textNotif"></div>
-
-        </div>
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <!-- Toasts -->
+    <div
+      id="notific"
+      class="toast align-items-center text-white border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <!-- Encabezado -->
+      <div class="toast-header p-0">
+        <div class="icon-notif"><i id="iconNotif"></i></div>
+        <strong class="me-auto" id="tituNotif"></strong>
+        <button
+          type="button"
+          class="btn-close m-2"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
       </div>
+
+      <!-- Cuerpo -->
+      <div class="toast-body" id="textNotif"></div>
+    </div>
+  </div>
 </main>
