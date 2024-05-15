@@ -1,3 +1,4 @@
+const idLb = "1XrF06J4sYhLkvJqmBKNB3j5TniIbbqA5c2F0u2yd1VA";
 function doGet() {
   return HtmlService.createTemplateFromFile("web")
     .evaluate()
@@ -11,7 +12,7 @@ function cathHtml(file) {
 
 function getContact() {
   let lb = SpreadsheetApp.openById(
-    "1XrF06J4sYhLkvJqmBKNB3j5TniIbbqA5c2F0u2yd1VA"
+    idLb
   ).getSheetByName("Hoja 1");
   let dt = lb.getDataRange().getValues();
   return dt;

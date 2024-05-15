@@ -1,8 +1,4 @@
 <script>
-  const notificOK = 1;
-  const notificAT = 2;
-  const notificFK = 3;
-
   // Función que crea una tabla HTML a partir de un conjunto de datos
   function makeTabCont() {
     // Elimina una tabla existente con el identificador "tCont"
@@ -57,59 +53,70 @@
 
     // Aplica estilos al encabezado y la tabla:
     tbHeader.classList.add("table-dark");
-    table.classList.add("table", "table-striped", "border", "border-2","border-dark");
+    table.classList.add(
+      "table",
+      "table-striped",
+      "border",
+      "border-2",
+      "border-dark"
+    );
 
     //Agrega la tabla al contenedor:
     document.getElementById("divCont").appendChild(table);
-    makeNotif(
-      notificOK,
-      "Contactos creados satisfactoriamente.",
-      "Todo en Orden"
-    );
+    makeNotifOK("Contactos creados satisfactoriamente.", "Peluche!");
   }
 
   function makeTabContFK() {
     //Mostrar notificaciones:
-    makeNotif(notificFK, "Problemas en la carga de los contactos.", "ERROR");
+    makeNotifFK("Problemas en la carga de los contactos.", "ERROR");
   }
 
-  function makeNotif(tipo, mensaje, titulo) {
-    let textNotif = document.getElementById("textNotif");
-    let tituNotif = document.getElementById("tituNotif");
+  function makeNotif(mensaje, titulo) {
+    document.getElementById("textNotif").textContent = mensaje;
+    document.getElementById("tituNotif").textContent = titulo;
     let elementNotif = document.getElementById("notific");
-    let iconNotif = document.getElementById("iconNotif");
-    let Notif = bootstrap.Toast.getOrCreateInstance(elementNotif);
+    bootstrap.Toast.getOrCreateInstance(elementNotif).show();
+  }
 
-    //Editar Notificacion:
-    textNotif.textContent = mensaje;
-    tituNotif.textContent = titulo;
+  function makeNotifOK(mensaje, titulo) {
+    makeNotif(mensaje, titulo);
+    makeIconOK();
+    makeColorNT("--color-verde-claro");
+  }
 
-    //Establece tipo de notificación:
-    switch (tipo) {
-      case notificOK:
-        iconNotif.className = "";
-        iconNotif.classList.add("bi", "bi-check2-square");
-        elementNotif.style.backgroundColor = getComputedStyle(
-          document.documentElement
-        ).getPropertyValue("--color-verde-claro");
-        break;
-      case notificAT:
-        iconNotif.className = "";
-        iconNotif.classList.add("bi", "bi-cone");
-        elementNotif.style.backgroundColor = getComputedStyle(
-          document.documentElement
-        ).getPropertyValue("--color-amarillo-oscuro");
-        break;
-      case notificFK:
-        iconNotif.className = "";
-        iconNotif.classList.add("bi", "bi-bug");
-        elementNotif.style.backgroundColor = getComputedStyle(
-          document.documentElement
-        ).getPropertyValue("--color-rojo-oscuro");
-        break;
-    }
+  function makeNotifAT(mensaje, titulo) {
+    makeNotif(mensaje, titulo);
+    makeIconOK();
+    makeColorNT("--color-amarillo-oscuro");
+  }
 
-    //Mostrar Notificacion:
-    Notif.show();
+  function makeNotifFK(mensaje, titulo) {
+    makeNotif(mensaje, titulo);
+    makeIconOK();
+    makeColorNT("--color-rojo-oscuro");
+  }
+
+  function makeIconOK() {
+    document.getElementById("iconNotif").className = "";
+    document
+      .getElementById("iconNotif")
+      .classList.add("bi", "bi-check2-square");
+  }
+
+  function makeIconAT() {
+    document.getElementById("iconNotif").className = "";
+    document.getElementById("iconNotif").classList.add("bi", "bi-cone");
+  }
+
+  function makeIconFK() {
+    document.getElementById("iconNotif").className = "";
+    document.getElementById("iconNotif").classList.add("bi", "bi-bug");
+  }
+
+  function makeColorNT(color) {
+    let elementNotif = document.getElementById("notific");
+    elementNotif.style.backgroundColor = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue(color);
   }
 </script>
