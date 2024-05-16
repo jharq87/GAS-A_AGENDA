@@ -1,17 +1,32 @@
 <main>
-  <!-- Botones -->
-  <div class="d-flex justify-content-center mb-4">
-    <button class="btn btn-success m-3" onclick="makeTabCont()">
-      Mostrar Contactos
+  <!-- 1-BOTONES SUPERIORES-->
+  <div class="d-flex justify-content-lg-center my-3">
+    <!-- 2.1- BOTON DE MOSTRAR CONTACTOS -->
+    <button type="button" class="btn btn-success m-2" onclick="makeTabCont()">
+      📝CONTACTOS
+    </button>
+
+    <!-- 4.1-LANZADOR MODAL -->
+    <button
+      type="button"
+      class="btn btn-primary m-2"
+      data-bs-toggle="modal"
+      data-bs-target="#makeContactModal"
+    >
+      ➕NUEVO CONTACTO
     </button>
   </div>
-  <!-- Tabla de contactos -->
-  <div class="container col-12 col-lg-8 d-flex justify-content-center" id="divCont"></div>
 
-  <!-- Notificaciones (toasts) -->
+  <!-- 2-TABLA DE CONTACTOS -->
+  <div
+    class="container col-12 col-lg-8 d-flex justify-content-center"
+    id="divCont"
+  ></div>
+
+  <!-- 3-NOTIFICACIONES -->
 
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <!-- Toasts -->
+    <!-- 3.1-CONTENEDOR -->
     <div
       id="notific"
       class="toast align-items-center text-white border-0"
@@ -19,7 +34,7 @@
       aria-live="assertive"
       aria-atomic="true"
     >
-      <!-- Encabezado -->
+      <!-- 3.1.1-ENCABEZADO -->
       <div class="toast-header p-0">
         <div class="icon-notif"><i id="iconNotif"></i></div>
         <strong class="me-auto" id="tituNotif"></strong>
@@ -31,8 +46,70 @@
         ></button>
       </div>
 
-      <!-- Cuerpo -->
+      <!-- 3.1.2-CUERPO -->
       <div class="toast-body" id="textNotif"></div>
+    </div>
+  </div>
+  <!-- 4-MODAL -->
+
+  <!-- 4.2-SUPERCONTENEDOR -->
+  <div
+    class="modal fade"
+    id="makeContactModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <!-- 4.2.1-ENCABEZADO & CONTENEDOR -->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="titleContactModal">Crear contacto✒</h1>
+        </div>
+
+        <!-- 4.2.1.1-FORMULARIO CREAR CONTACTOS-->
+        <form
+          onsubmit="inContact()"
+          method="dialog"
+          id="form"
+        >
+          <!-- 4.2.1.1.1-CUERPO -->
+          <div class="modal-body">
+            <!-- 4.2.1.1.1.1-CAMPO NOMBRE -->
+            <div>
+              <label for="name" class="form-label"
+                >Introduce nombre de contacto</label
+              >
+              <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+
+            <!-- 4.2.1.1.1.2-CAMPO CORREO -->
+            <div>
+              <label for="email" class="form-label">Introduce correo.</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="email"
+                required
+              >
+            </div>
+          </div>
+          <!-- 4.2.1.1.2-PIE DE MODAL -->
+          <div class="modal-footer">
+            <!-- 4.2.1.1.2.1-BOTON DE CANCELAR -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              CANCELAR
+            </button>
+            <!-- 4.2.1.1.2.2-BOTON DE ACEPTAR -->
+            <button type="submit" class="btn btn-success">ACEPTAR</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </main>

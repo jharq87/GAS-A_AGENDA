@@ -1,9 +1,39 @@
 <script>
+  // Función que crea un formulario a partir de un conjunto de datos
+  function inContact() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    //Eliminar modal
+    bootstrap.Modal.getInstance(document.getElementById('makeContactModal')).hide();
+    // Elimina una tabla existente con el identificador "tCont"
+    removeTable();
+    //Muestra carga:
+    makeLoader("divCont");
+
+    // Obtiene los datos del servidor usando Google Apps Script
+    google.script.run
+      .withSuccessHandler(insertContOK)
+      .withFailureHandler(insertContFK)
+      .insertContact(name, email); // Obtiene los datos del servidor
+  }
+
+  function insertContOK() {
+    /*Reseteamos los inputs*/
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    makeNotifOK("Contacto creado correctamente.", "CONTACTO OK");
+    eraseLoader();
+    makeTabCont();
+  }
+  function insertContFK() {
+    makeNotifFK("Error al crear contacto.", "CONTACTO ERROR");
+    eraseLoader();
+    makeTabCont();
+  }
   // Función que crea una tabla HTML a partir de un conjunto de datos
   function makeTabCont() {
     // Elimina una tabla existente con el identificador "tCont"
     removeTable();
-    
 
     //Muestra carga:
     makeLoader("divCont");
@@ -136,7 +166,7 @@
     loader.classList.add("lds-ellipsis");
     document.getElementById(apendiceDe).appendChild(loader);
   }
- 
+
   function eraseLoader() {
     let loader = document.getElementById("loader");
     if (loader) loader.remove();
