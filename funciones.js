@@ -23,7 +23,7 @@ function getContact() {
   return dt;
 }
 
-function insertContact(nombre, correo) {
+function insertContact(name, lastname, email, tlf) {
   let hj = lb.getSheetByName("Hoja 1");
-  hj.appendRow([nombre, correo]);
+  hj.appendRow([name, lastname, email, tlf]);
 }

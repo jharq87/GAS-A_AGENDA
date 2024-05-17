@@ -2,7 +2,9 @@
   // Función que crea un formulario a partir de un conjunto de datos
   function inContact() {
     let name = document.getElementById("name").value;
+    let lastname = document.getElementById("lastname").value;
     let email = document.getElementById("email").value;
+    let tlf = document.getElementById("tlf").value;
     //Eliminar modal
     bootstrap.Modal.getInstance(document.getElementById('makeContactModal')).hide();
     // Elimina una tabla existente con el identificador "tCont"
@@ -14,7 +16,7 @@
     google.script.run
       .withSuccessHandler(insertContOK)
       .withFailureHandler(insertContFK)
-      .insertContact(name, email); // Obtiene los datos del servidor
+      .insertContact(name, lastname, email, tlf); // Obtiene los datos del servidor
   }
 
   function insertContOK() {

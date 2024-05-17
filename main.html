@@ -1,12 +1,12 @@
 <main>
   <!-- 1-BOTONES SUPERIORES-->
   <div class="d-flex justify-content-lg-center my-3">
-    <!-- 2.1- BOTON DE MOSTRAR CONTACTOS -->
+  <!-- 2.1- BOTON DE MOSTRAR CONTACTOS -->
     <button type="button" class="btn btn-success m-2" onclick="makeTabCont()">
       📝CONTACTOS
     </button>
 
-    <!-- 4.1-LANZADOR MODAL -->
+  <!-- 4.1-LANZADOR MODAL -->
     <button
       type="button"
       class="btn btn-primary m-2"
@@ -17,16 +17,16 @@
     </button>
   </div>
 
-  <!-- 2-TABLA DE CONTACTOS -->
+<!-- 2-TABLA DE CONTACTOS -->
   <div
     class="container col-12 col-lg-8 d-flex justify-content-center"
     id="divCont"
   ></div>
 
-  <!-- 3-NOTIFICACIONES -->
+<!-- 3-NOTIFICACIONES -->
 
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <!-- 3.1-CONTENEDOR -->
+<!-- 3.1-CONTENEDOR -->
     <div
       id="notific"
       class="toast align-items-center text-white border-0"
@@ -34,7 +34,7 @@
       aria-live="assertive"
       aria-atomic="true"
     >
-      <!-- 3.1.1-ENCABEZADO -->
+<!-- 3.1.1-ENCABEZADO -->
       <div class="toast-header p-0">
         <div class="icon-notif"><i id="iconNotif"></i></div>
         <strong class="me-auto" id="tituNotif"></strong>
@@ -46,7 +46,7 @@
         ></button>
       </div>
 
-      <!-- 3.1.2-CUERPO -->
+<!-- 3.1.2-CUERPO -->
       <div class="toast-body" id="textNotif"></div>
     </div>
   </div>
@@ -60,44 +60,48 @@
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
-    <!-- 4.2.1-ENCABEZADO & CONTENEDOR -->
+<!-- 4.2.1-ENCABEZADO & CONTENEDOR -->
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="titleContactModal">Crear contacto✒</h1>
         </div>
 
-        <!-- 4.2.1.1-FORMULARIO CREAR CONTACTOS-->
+<!-- 4.2.1.1-FORMULARIO CREAR CONTACTOS-->
         <form
           onsubmit="inContact()"
           method="dialog"
           id="form"
         >
-          <!-- 4.2.1.1.1-CUERPO -->
+<!-- 4.2.1.1.1-CUERPO -->
           <div class="modal-body">
-            <!-- 4.2.1.1.1.1-CAMPO NOMBRE -->
-            <div>
-              <label for="name" class="form-label"
-                >Introduce nombre de contacto</label
-              >
-              <input type="text" class="form-control" name="name" id="name" required>
+<!-- 4.2.1.1.1.1-CAMPO NOMBRE & APELLIDO -->
+            <div class="row mb-3 ">
+<!-- 4.2.1.1.1.1.1-CAMPO NOMBRE-->
+              <div class="col-4">
+                <label for="name" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" name="name" id="name" pattern="[A-Za-zÀÁÉÍÓÚñü\s]{2,}(?: [A-Za-zÀÁÉÍÓÚñü\s])*$" required>
+              </div>
+<!-- 4.2.1.1.1.1.2-CAMPO APELLIDO-->
+              <div class="col-8 ">
+                <label for="lastname" class="form-label">Apellido:</label>
+                <input type="text" class="form-control" name="lastname" id="lastname" pattern="[A-Za-zÀÁÉÍÓÚñü\s]{2,}(?: [A-Za-zÀÁÉÍÓÚñü\s])*$" required>
+              </div>
             </div>
 
-            <!-- 4.2.1.1.1.2-CAMPO CORREO -->
-            <div>
-              <label for="email" class="form-label">Introduce correo.</label>
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                id="email"
-                required
-              >
-            </div>
+<!-- 4.2.1.1.1.2-CAMPO CORREO & TELEFONO-->
+            <div class="input-group mb-3">
+<!-- 4.2.1.1.1.2-CAMPO CORREO-->
+                <span class="input-group-text"><i class="bi bi-envelope-at-fill"></i></span>
+                <input type="email" class="form-control " name="email" id="email" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
+<!-- 4.2.1.1.1.2-CAMPO TELEFONO-->
+                <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                <input type="tlf" class="form-control" name="tlf" id="tlf" pattern="^\d{10}$" title="Ingrese diez digitos(excluya cualquier 0 inicial)"   required>
+            </div>  
           </div>
-          <!-- 4.2.1.1.2-PIE DE MODAL -->
+<!-- 4.2.1.1.2-PIE DE MODAL -->
           <div class="modal-footer">
-            <!-- 4.2.1.1.2.1-BOTON DE CANCELAR -->
+<!-- 4.2.1.1.2.1-BOTON DE CANCELAR -->
             <button
               type="button"
               class="btn btn-secondary"
@@ -105,7 +109,7 @@
             >
               CANCELAR
             </button>
-            <!-- 4.2.1.1.2.2-BOTON DE ACEPTAR -->
+<!-- 4.2.1.1.2.2-BOTON DE ACEPTAR -->
             <button type="submit" class="btn btn-success">ACEPTAR</button>
           </div>
         </form>
